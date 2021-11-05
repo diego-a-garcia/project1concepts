@@ -1,0 +1,222 @@
+#include<iostream>
+using namespace std;
+
+void Addition(float A[][100] , float B[][100] , int MA , int NA , int MB , int NB){
+   float C[MA][NA];
+
+   // Displaying the Matrix A
+   cout << "Matrix A: " << endl;
+   for(int i = 0; i < MA; ++i){
+       for(int j = 0; j < NA; ++j){
+           cout << A[i][j] << " ";
+       }
+       cout << endl;
+   }
+
+   // Displaying Matrix B
+   cout << "Matrix B: " << endl;
+for(int i = 0; i < MB; ++i){
+for(int j = 0; j < NB; ++j){
+cout << B[i][j] << " ";
+}
+cout << endl;
+}
+
+   // Calculating Addition of Two Matrix
+   if((MA != MB) && (NA != NB)){
+       cout << "Matrices cannot be Added " << endl;
+       return;
+   }
+   else{
+       for(int i = 0; i < NA; ++i){
+           for(int j = 0; j < NB; ++j){
+               C[i][j] = A[i][j] + B[i][j];
+           }
+       }
+
+       // Displaying Addition of matrix
+       cout << "Sum of Matrices : " << endl;
+   for(int i = 0; i < NA; ++i){
+   for(int j = 0; j < NB; ++j){
+   cout << C[i][j] << " ";
+   }
+   cout << endl;
+   }
+
+   }
+}
+
+
+void Subtraction(float A[][100] , float B[][100] , int MA , int NA , int MB , int NB){
+   float C[MA][NB];
+
+   // Displaying the Matrix A
+   cout << "Matrix A: " << endl;
+   for(int i = 0; i < MA; ++i){
+       for(int j = 0; j < NA; ++j){
+           cout << A[i][j] << " ";
+       }
+       cout << endl;
+   }
+
+   // Displaying Matrix B
+   cout << "Matrix B: " << endl;
+for(int i = 0; i < MB; ++i){
+for(int j = 0; j < NB; ++j){
+cout << B[i][j] << " ";
+}
+cout << endl;
+}
+
+   // Calculating Subtraction of Two Matrix
+   if((MA != MB) && (NA != NB)){
+       cout << "Matrices cannot be Subtracted " << endl;
+       return;
+   }
+   else{
+       for(int i = 0; i < NA; ++i){
+           for(int j = 0; j < NB; ++j){
+               C[i][j] = A[i][j] - B[i][j];
+           }
+       }
+
+       // Displaying Difference of matrix
+       cout << "Difference of Matrices : " << endl;
+   for(int i = 0; i < NA; ++i){
+   for(int j = 0; j < NB; ++j){
+   cout << C[i][j] << " ";
+   }
+   cout << endl;
+   }
+
+   }
+}
+
+void Multiplication(float A[][100] , float B[][100] , int MA , int NA , int MB , int NB){
+   float C[MA][NB];
+
+   // Displaying the Matrix A
+   cout << "Matrix A: " << endl;
+   for(int i = 0; i < MA; ++i){
+       for(int j = 0; j < NA; ++j){
+           cout << A[i][j] << " ";
+       }
+       cout << endl;
+   }
+
+   // Displaying Matrix B
+   cout << "Matrix B: " << endl;
+for(int i = 0; i < MB; ++i){
+   for(int j = 0; j < NB; ++j){
+       cout << B[i][j] << " ";
+   }
+   cout << endl;
+}
+
+   // Calculating Product of Two Matrix
+   if((NA != MB)){
+       cout << "Matrices cannot be Multiplied " << endl;
+       return;
+   }
+   else{
+       for(int i = 0; i < MA; ++i){
+           for(int j = 0; j < NB; ++j){
+               for(int k = 0; k < NA; ++k){
+                   C[i][j] = A[i][k] * B[k][j];
+               }
+           }
+       }
+
+       // Displaying Product of matrix
+       cout << "Product of Matrices : " << endl;
+   for(int i = 0; i < NA; ++i){
+   for(int j = 0; j < NB; ++j){
+   cout << C[i][j] << " ";
+   }
+   cout << endl;
+   }
+
+   }
+}
+
+int main(){
+   float A[100][100] , B[100][100];
+   int MA , MB , NA , NB , choice;
+   char ch = 'y';
+   // Asking the user for input
+   cout << "Enter the number of rows of Matrix A : ";
+   cin >> MA;
+   cout << "Enter the number of column of Matrix A : ";
+   cin >> NA;
+   cout << "Enter the number of rows of Matrix B : ";
+   cin >> MB;
+   cout << "Enter the number of columns of Matrix B : ";
+   cin >> NB;
+   cout << "Enter the Elements of Matrix A : " << endl;
+   for(int i = 0; i < MA; ++i){
+       for(int j = 0; j < NA; ++j){
+           cin >> A[i][j];
+       }
+   }
+   cout << "Enter the Elements of Matrix B : " << endl;
+   for(int i = 0; i < MB; ++i){
+       for(int j = 0; j < NB; ++j){
+           cin >> B[i][j];
+       }
+   }
+       while(ch == 'y' || ch == 'Y'){
+  
+           // Displaying the menu
+           cout << "1. Addition\n2. Subtraction\n3. Multiplication\n4. Exit\n";
+           cout << "Enter your choice : " << endl;
+           cin >> choice;
+           switch(choice){
+               case 1 : Addition(A , B , MA , NA , MB , NB);
+                   break;
+               case 2 : Subtraction(A , B , MA , NA , MB , NB);
+                   break;
+               case 3 : Multiplication(A , B , MA , NA , MB , NB);
+                   break;
+               case 4 : exit(0);
+                   break;
+               default: cout << "Wrong Choice!! " << endl;
+           }
+
+           cout << "Do you want to continue(y / n) " << endl;
+           cin >> ch;
+           if(ch != 'y'&& ch != 'Y'){
+               exit(0);
+           }
+           cout << "Do you want to enter new matrix(y/n) " << endl;
+           char Choice;
+           cin >> Choice;
+           if(Choice == 'y' || Choice == 'Y'){
+               // Asking the user for input
+       cout << "Enter the number of rows of Matrix A : ";
+       cin >> MA;
+       cout << "Enter the number of column of Matrix A : ";
+       cin >> NA;
+       cout << "Enter the number of rows of Matrix B : ";
+       cin >> MB;
+       cout << "Enter the number of columns of Matrix B : ";
+       cin >> NB;
+       cout << "Enter the Elements of Matrix A : " << endl;
+       for(int i = 0; i < MA; ++i){
+       for(int j = 0; j < NA; ++j){
+       cin >> A[i][j];
+       }
+       }
+       cout << "Enter the Elements of Matrix B : " << endl;
+       for(int i = 0; i < MB; ++i){
+       for(int j = 0; j < NB; ++j){
+       cin >> B[i][j];
+       }
+       }
+
+           }
+           else{
+               continue;
+           }
+       }
+   return 0;
+}     

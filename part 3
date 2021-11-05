@@ -1,0 +1,245 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+#include <iostream>
+using namespace std;
+
+class Matrix {
+private:
+float **board;
+int rows;
+int columns;
+  
+public:
+Matrix();
+  
+//Adding prototypes for the functions here...
+//Do not provide any implementation here
+//Implementations shoule be in the cpp file
+  
+void initialize(int, int);
+  
+int getRows() const ;
+  
+int getColumns() const ;
+  
+//Use friend to overload operators to access outside of this class
+friend std::ostream& operator << (std::ostream& out, const Matrix &);
+friend std::istream& operator >> (std::istream &in, Matrix &);
+friend Matrix operator + (Matrix const &, Matrix const &);
+friend Matrix operator - (Matrix const &, Matrix const &);
+friend Matrix operator * (Matrix const &, Matrix const &);
+};
+#endif
+
+Matrix.cpp:
+
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+// Default Constructor
+// Initialize rows and columns to ZERO
+Matrix::Matrix() {
+rows = 0;
+columns = 0;
+}
+
+void Matrix :: initialize(int r,int c)
+{
+rows = r;
+columns = c;
+board = new float*[rows];
+  
+for (int i = 0; i < rows; i++) {
+board[i] = new float[columns];
+}
+}
+
+int Matrix :: getRows() const {
+return rows;
+  
+}
+  
+int Matrix :: getColumns() const {
+return columns;
+  
+}
+/**
+* Function: operator >> overload
+* It uses istream and an Matrix object
+* Prompts the user to input the rows and columns
+* And populates those values in the given Matrix object
+*/
+std::istream& operator >> (std::istream &in, Matrix &m)
+{
+//Get Row integer from user
+cout << "Enter number of row: ";
+int rows;
+int columns;
+in >> rows;
+  
+//Get Column integer from user
+cout << "Enter number of columns: ";
+
+in >> columns;
+m.initialize(rows,columns);
+  
+cout<<"Enter the values for rows and columns: "<<endl;
+  
+for (int i = 0; i < rows; i++) {
+for (int j = 0; j < columns; j++) {
+in >>m.board[i][j];
+}
+}
+//Return the input stream
+return in;
+}
+
+/**
+* Function: operator << overload
+* It uses ostream and an Matrix object
+* It displays the Matrix
+*/
+std::ostream& operator<<(std::ostream& out, const Matrix &m)
+{
+int rows = m.getRows();
+int columns=m.getColumns();
+  
+for (int i = 0; i < rows; ++i) { // for each row
+for (int j = 0; j < columns; ++j) { // for each column
+out << m.board[i][j]<<" ";
+}
+out<<endl;
+}
+   return out;
+}
+
+/**
+* Function: operator + overload
+* It takes two Matrix objects for addition
+* It returns new matrix object by adding rows and column values of both objects
+*/
+Matrix operator + (Matrix const &m1, Matrix const &m2)
+{
+// Declare the new matrix object to store the results
+Matrix result;
+result.initialize(m1.rows,m2.columns);
+for(int i=0; i<m1.rows; i++)
+{
+for(int j=0; j<m2.columns; j++)
+{
+result.board[i][j]=m1.board[i][j]+m2.board[i][j];
+}
+}
+  
+// return the result object
+return result;
+}
+
+/**
+* Function: operator - overload
+* It takes two Matrix objects for addition
+* It returns new matrix object by adding rows and column values of both objects
+*/
+Matrix operator - (Matrix const &m1, Matrix const &m2)
+{
+// Declare the new matrix object to store the results
+Matrix result;
+result.initialize(m1.rows,m2.columns);
+for(int i=0; i<m1.rows; i++)
+{
+for(int j=0; j<m2.columns; j++)
+{
+result.board[i][j]=m1.board[i][j]-m2.board[i][j];
+}
+}
+  
+// return the result object
+return result;
+}
+
+Matrix operator * (Matrix const &m1, Matrix const &m2)
+{
+// Declare the new matrix object to store the results
+Matrix result;
+result.initialize(m1.rows,m2.columns);
+for(int i=0; i<m1.rows; i++)
+{
+for(int j=0; j<m2.columns; j++)
+{
+for(int k = 0; k < m2.columns; k++)
+{
+result.board[i][j]+=m1.board[i][k]*m2.board[k][j];
+}
+}
+}
+  
+// return the result object
+return result;
+}
+
+Main.cpp:
+
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+
+//declaring function prototype here
+int getMenuChoice();
+
+//starting point of the program
+int main(){
+  
+int choice = 1;
+Matrix matrix1;
+Matrix matrix2;
+  
+do {
+switch(choice){
+case 1:
+cout << "Enter the values of first Matrix"<<endl;
+cin >> matrix1;
+  
+cout <<"Enter the values of second Matrix"<<endl;
+cin >> matrix2;
+  
+cout << "MATRIX 1"<<endl;
+cout << matrix1;
+cout << "MATRIX 2"<<endl;
+cout << matrix2;
+break;
+case 2:
+cout<<"Result After ADDITION of two Matrix"<<endl;
+cout << matrix1 + matrix2;
+break;
+case 3:
+cout<<"Result After SUBTRACTION of two Matrix"<<endl;
+cout << matrix1 - matrix2;
+break;
+case 4:
+cout<<"Result After MULTIPLICATION of two Matrix"<<endl;
+cout << matrix1 * matrix2;
+break;
+default:
+break;
+}
+choice = getMenuChoice();
+  
+} while( choice != 5 );
+  
+return 0;
+}
+
+//getting user choice
+int getMenuChoice(){
+int choice;
+cout << "********MENU*********"<<endl;
+cout<<"1) SELECT NEW MATRICES"<<endl;
+cout<<"2) ADDITION"<<endl;
+cout<<"3) SUBTRACTION"<<endl;
+cout<<"4) MULTIPLICATION"<<endl;
+cout<<"5) EXIT"<<endl;
+cout<<"Enter the operation to be performed: ";
+cin >> choice;
+return choice;
+}

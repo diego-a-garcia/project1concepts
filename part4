@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class Matrix {   //This class stores the matrix and provides functions for various operations
+
+    private int row;    //stores row count of matrix
+    private int column; //stores column count of matrix
+    private float[][] array;    //stores the elements of matrix
+
+    public Matrix(int row, int column) {    //parameterized constructor
+        this.row = row;
+        this.column = column;
+        array=new float[row][column];   //initialize the array to store elements
+    }
+
+    public void fillMatrix() { //this function takes input from user and fills the matrix
+        System.out.println("Please enter matrix elements :");
+        Scanner sc = new Scanner(System.in);
+        for (int i=0;i<this.row;i++)    //loop over every row in matrix
+            for (int j=0;j<this.column;j++) {   //loop over every column in matrix
+                this.array[i][j] = sc.nextFloat(); //take float value from user
+            }
+    }
+
+    public void add(Matrix m) { //this function performs addition operation on matrices
+        if (m==null || this.row!=m.row || this.column!=m.column) { //check if both matrices are equal or not
+            System.out.println("Error: For addition matrices should be of equal size!");
+            return;     // return if matrices are not equal
+        }
+        Matrix result = new Matrix(this.row,this.column);   //initialize the result matrix
+        for (int i=0;i<this.row;i++)    //loop over every row
+            for (int j=0;j<this.column;j++) {   //loop over every column
+                result.array[i][j] = this.array[i][j] + m.array[i][j]; //add respective matrix elements
+            }
+        System.out.println("Result after addition:");
+        result.printMatrix();   // print the result
+    }
+
+    public void subtract(Matrix m) { //this function performs subtraction operation on matrices
+        if (m==null || this.row!=m.row || this.column!=m.column) { //check if both matrices are equal or not
+            System.out.println("Error: For subtraction matrices should be of equal size!");
+            return;     // return if matrices are not equal
+        }
+        Matrix result = new Matrix(this.row,this.column);   //initialize the result matrix
+        for (int i=0;i<this.row;i++)    //loop over every row in matrix
+            for (int j=0;j<this.column;j++) {   //loop over every column in matrix
+                result.array[i][j] = this.array[i][j] - m.array[i][j]; //subtract respective matrix elements
+            }
+        System.out.println("Result after subtraction:");
+        result.printMatrix();   // print the result
+    }
+
+    public void multiply(Matrix m) {    //this function performs multiplication operation on matrices
+        if (m==null || this.column!=m.row) {    //check matrices size
+            System.out.println("Error: For multiplication first matrix column number and second matrix row number should be of equal!");
+            return;     //return if it doesn't meet the requirement
+        }
+        Matrix result = new Matrix(this.row,this.column);   //initialize the result matrix
+        for (int i=0;i<this.row;i++)    //loop over every row in matrix
+            for (int j=0;j<this.column;j++) {   //loop over every column in matrix
+                float sum = 0.0f;       //initialize the sum to 0.0
+                for (int k=0;k<this.column;k++)
+                    sum = sum + (this.array[i][k]*m.array[k][j]);   //find the product
+                result.array[i][j] = sum;   //store the obtained product from loop
+            }
+        System.out.println("Result after multiplication:");
+        result.printMatrix();   // print the result
+    }
+
+    public void printMatrix() {     //this function prints the matrix size and elements
+        System.out.printf("Matrix size: %d * %d\n",row,column); //print size
+        for (int i=0;i<this.row;i++) {      //loop over every row in matrix
+            for (int j=0;j<this.column;j++) {    //loop over every column in matrix
+                System.out.printf("%f ",this.array[i][j]); //print the element
+            }
+            System.out.print("\n");
+        }
+    }
+}
+

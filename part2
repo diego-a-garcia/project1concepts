@@ -1,0 +1,186 @@
+#include <iostream>
+#include <iomanip>
+#define ROWS 3       //Constant for number of rows for matrix
+#define COLS 3       //Constant for number of columns for matrix
+using namespace std;
+
+//Functions prototype
+void inputMatrix(float **mat);
+void printMatrix(float **mat);
+float** matrixAddition(float** mat1, float** mat2);
+float** matrixSubtraction(float** mat1, float** mat2);
+float** matrixMultiplication(float** mat1, float** mat2);
+
+//Driver function
+int main()
+{
+   float **matrix1, **matrix2, **matrix3;
+
+   //Dynamically allocating memory for first matrix  
+   matrix1 = new float* [ROWS];
+for (int i=0; i<ROWS; i++)
+matrix1[i] = new float [COLS];
+
+//Dynamically allocating memory for second matrix  
+matrix2 = new float* [ROWS];
+for (int i=0; i<ROWS; i++)
+matrix2[i] = new float [COLS];
+  
+  
+cout << "Enter the elements for first matrix:" << endl;
+//Calling function to input elements for first matrix
+   inputMatrix(matrix1);
+   cout << "Enter the elements for second matrix:" << endl;
+   //Calling function to input elements for second matrix
+   inputMatrix(matrix2);
+  
+   cout << "\nFirst Matrix:" << endl;
+   //Calling function to print first matrix
+   printMatrix(matrix1);
+   cout << "\nSecond Matrix:" << endl;
+   //Calling function to print second matrix
+   printMatrix(matrix2);
+  
+   int choice;
+   do
+   {
+       //Display menu
+       cout << "1. Matrix Addition" << endl;
+       cout << "2. Matrix Subtraction" << endl;
+       cout << "3. Matrix Multiplication" << endl;
+       cout << "4. Select two new matrices" << endl;
+       cout << "5. Exit" << endl;
+       //Prompt & read user choice
+       cout << "Enter your choice: ";
+       cin >> choice;
+      
+       cout << endl;
+       switch(choice)
+       {
+           case 1:   //Calling function to get addition of two matrix
+                   matrix3 = matrixAddition(matrix1, matrix2);
+                   cout << "Addition of two matrix:" << endl;
+                   printMatrix(matrix3);
+                   break;
+           case 2:   //Calling function to get subtraction of two matrix
+                   matrix3 = matrixSubtraction(matrix1, matrix2);
+                   cout << "Subtraction of two matrix:" << endl;
+                   printMatrix(matrix3);
+                   break;
+           case 3:   //Calling function to get multiplication of two matrix
+                   matrix3 = matrixMultiplication(matrix1, matrix2);
+                   cout << "Multiplication of two matrix:" << endl;
+                   printMatrix(matrix3);
+                   break;
+           case 4:   //input the elements for two new matrix
+                   cout << "Enter the elements for first matrix:" << endl;
+                   inputMatrix(matrix1);
+                   cout << "Enter the elements for second matrix:" << endl;
+                   inputMatrix(matrix2);
+                   //Print the elements of two matrix
+                   cout << "\nFirst Matrix" << endl;
+                   printMatrix(matrix1);
+                   cout << "\nSecond Matrix" << endl;
+                   printMatrix(matrix2);
+       }
+       cout << endl;
+   }while(choice!=5);
+  
+   return 0;
+}
+
+//Function to input the elements for matrix passed as parameter
+void inputMatrix(float **mat)
+{   
+// Storing elements of first matrix
+for(int r = 0; r < ROWS; r++)
+{
+for(int c = 0; c < COLS; c++)
+{
+cout << "Enter element row = " << r + 1 << " Col = " << c + 1 << ": ";
+cin >> mat[r][c];
+}
+    }
+}
+
+//Function to print the elements for matrix passed as parameter
+void printMatrix(float **mat)
+{
+   for(int r = 0; r < ROWS; r++)
+{
+for(int c = 0; c < COLS; c++)
+{
+cout << right << setw(5) << mat[r][c] << " ";
+}
+cout << endl;
+    }
+    cout << endl;
+}
+
+//Function to add two matrix passed as parameter and
+//returns the resultant matrix
+float** matrixAddition(float** mat1, float** mat2)
+{
+   //Dynamically allocating memory for resultant matrix
+   float **mat3 = new float* [ROWS];
+for (int r=0; r<ROWS; r++)
+mat3[r] = new float [COLS];
+  
+   //Performing addition of two matrix
+   for(int r = 0; r < ROWS; r++)
+{
+for(int c = 0; c < COLS; c++)
+{
+mat3[r][c] = mat1[r][c] + mat2[r][c];
+}
+    }
+   
+    //returns resultant matrix
+    return mat3;
+}
+
+//Function to subtract two matrix passed as parameter and
+//returns the resultant matrix
+float** matrixSubtraction(float** mat1, float** mat2)
+{
+   //Dynamically allocating memory for resultant matrix
+   float **mat3 = new float* [ROWS];
+for (int r=0; r<ROWS; r++)
+mat3[r] = new float [COLS];
+  
+   //Performing sunstraction of two matrix
+   for(int r = 0; r < ROWS; r++)
+{
+for(int c = 0; c < COLS; c++)
+{
+mat3[r][c] = mat1[r][c] - mat2[r][c];
+}
+    }
+    //returns resultant matrix
+    return mat3;
+}
+
+//Function to multiply two matrix passed as parameter and
+//returns the resultant matrix
+float** matrixMultiplication(float** mat1, float** mat2)
+{
+   //Dynamically allocating memory for resultant matrix
+   float **mat3 = new float* [ROWS];
+for (int r=0; r<ROWS; r++)
+mat3[r] = new float [COLS];
+  
+   //Performing multilication of two matrix
+   for(int i=0; i<ROWS; i++)
+   {
+       for(int j=0; j<COLS; j++)
+       {
+           mat3[i][j] = 0;
+           for(int k=0; k<COLS; k++)
+           {
+mat3[i][j] += mat1[i][k] * mat2[k][j];
+}
+       }
+   }
+//returns resultant matrix
+    return mat3;
+}
